@@ -1,8 +1,8 @@
 package com.brahalla.Cerberus.model.json.response;
 
-import com.brahalla.Cerberus.model.base.ModelBase;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
-public class AuthenticationResponse extends ModelBase {
+public class AuthenticationResponse {
 
 	private static final long serialVersionUID = -6624726180748515507L;
 	private String token;
@@ -21,6 +21,11 @@ public class AuthenticationResponse extends ModelBase {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	@Override
+	public String toString() {
+		return ReflectionToStringBuilder.toString(this);
 	}
 
 }

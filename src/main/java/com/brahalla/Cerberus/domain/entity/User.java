@@ -1,20 +1,13 @@
 package com.brahalla.Cerberus.domain.entity;
 
-import com.brahalla.Cerberus.domain.base.DomainBase;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
+import javax.persistence.*;
 import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GenerationType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User extends DomainBase {
+public class User {
 
   private static final long serialVersionUID = 2353528370345499815L;
   private Long id;
@@ -26,6 +19,11 @@ public class User extends DomainBase {
 
   public User() {
     super();
+  }
+
+  @Override
+  public String toString() {
+    return ReflectionToStringBuilder.toString(this);
   }
 
   public User(String username, String password, String email, Date lastPasswordReset, String authorities) {
