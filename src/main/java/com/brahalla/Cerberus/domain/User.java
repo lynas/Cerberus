@@ -10,11 +10,20 @@ import java.util.Date;
 public class User {
 
     private static final long serialVersionUID = 2353528370345499815L;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq")
+    @SequenceGenerator(name = "users_seq", sequenceName = "users_seq", allocationSize = 1)
     private Long id;
+    @Column(name = "username")
     private String username;
+    @Column(name = "password")
     private String password;
+    @Column(name = "email")
     private String email;
+    @Column(name = "last_password_reset")
     private Date lastPasswordReset;
+    @Column(name = "authorities")
     private String authorities;
 
     public User() {
@@ -34,10 +43,6 @@ public class User {
         this.setAuthorities(authorities);
     }
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq")
-    @SequenceGenerator(name = "users_seq", sequenceName = "users_seq", allocationSize = 1)
     public Long getId() {
         return this.id;
     }
@@ -46,7 +51,6 @@ public class User {
         this.id = id;
     }
 
-    @Column(name = "username")
     public String getUsername() {
         return this.username;
     }
@@ -55,7 +59,6 @@ public class User {
         this.username = username;
     }
 
-    @Column(name = "password")
     public String getPassword() {
         return this.password;
     }
@@ -64,7 +67,6 @@ public class User {
         this.password = password;
     }
 
-    @Column(name = "email")
     public String getEmail() {
         return this.email;
     }
@@ -73,7 +75,6 @@ public class User {
         this.email = email;
     }
 
-    @Column(name = "last_password_reset")
     public Date getLastPasswordReset() {
         return this.lastPasswordReset;
     }
@@ -82,7 +83,6 @@ public class User {
         this.lastPasswordReset = lastPasswordReset;
     }
 
-    @Column(name = "authorities")
     public String getAuthorities() {
         return this.authorities;
     }
