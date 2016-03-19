@@ -13,25 +13,25 @@ import org.springframework.stereotype.Service;
 @Service(value = "userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-  @Autowired
-  private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-  @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    User user = this.userRepository.findByUsername(username);
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = this.userRepository.findByUsername(username);
 
-    if (user == null) {
-      throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
-    } else {
-      return new CerberusUser(
-              user.getId(),
-              user.getUsername(),
-              user.getPassword(),
-              user.getEmail(),
-              user.getLastPasswordReset(),
-              AuthorityUtils.commaSeparatedStringToAuthorityList(user.getAuthorities())
-      );
+        if (user == null) {
+            throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
+        } else {
+            return new CerberusUser(
+                    user.getId(),
+                    user.getUsername(),
+                    user.getPassword(),
+                    user.getEmail(),
+                    user.getLastPasswordReset(),
+                    AuthorityUtils.commaSeparatedStringToAuthorityList(user.getAuthorities())
+            );
+        }
     }
-  }
 
 }
