@@ -9,7 +9,6 @@ import java.util.Date;
 @Table(name = "users")
 public class User {
 
-    private static final long serialVersionUID = 2353528370345499815L;
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq")
