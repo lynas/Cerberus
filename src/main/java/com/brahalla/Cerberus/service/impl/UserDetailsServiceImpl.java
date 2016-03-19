@@ -1,6 +1,6 @@
 package com.brahalla.Cerberus.service.impl;
 
-import com.brahalla.Cerberus.domain.entity.User;
+import com.brahalla.Cerberus.domain.User;
 import com.brahalla.Cerberus.model.security.CerberusUser;
 import com.brahalla.Cerberus.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

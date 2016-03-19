@@ -1,4 +1,4 @@
-package com.brahalla.Cerberus.domain.entity;
+package com.brahalla.Cerberus.domain;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 

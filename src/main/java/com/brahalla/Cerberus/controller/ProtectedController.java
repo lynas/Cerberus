@@ -1,4 +1,4 @@
-package com.brahalla.Cerberus.controller.rest;
+package com.brahalla.Cerberus.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
