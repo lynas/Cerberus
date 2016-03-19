@@ -1,11 +1,8 @@
 package com.brahalla.Cerberus.configuration;
 
 import com.brahalla.Cerberus.security.AuthenticationTokenFilter;
-import com.brahalla.Cerberus.security.EntryPointUnauthorizedHandler;
-import com.brahalla.Cerberus.security.TokenUtils;
-import com.brahalla.Cerberus.service.SecurityService;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -18,7 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -27,24 +24,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Autowired
-  private EntryPointUnauthorizedHandler unauthorizedHandler;
+  private ApplicationContext applicationContext;
 
-  @Autowired
-  private UserDetailsService userDetailsService;
 
-  @Autowired
-  private SecurityService securityService;
 
   @Autowired
   public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
     authenticationManagerBuilder
-      .userDetailsService(this.userDetailsService)
-        .passwordEncoder(passwordEncoder());
-  }
-
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
+      .userDetailsService((UserDetailsService) applicationContext.getBean("userDetailsService"))
+        .passwordEncoder(new BCryptPasswordEncoder());
   }
 
   @Bean
@@ -60,10 +48,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     return authenticationTokenFilter;
   }
 
-  @Bean
-  public SecurityService securityService() {
-    return this.securityService;
-  }
 
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -71,7 +55,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
       .csrf()
         .disable()
       .exceptionHandling()
-        .authenticationEntryPoint(this.unauthorizedHandler)
+        .authenticationEntryPoint((AuthenticationEntryPoint) applicationContext.getBean("authenticationEntryPoint"))
         .and()
       .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
