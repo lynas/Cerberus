@@ -1,8 +1,8 @@
-package com.brahalla.Cerberus.service.impl;
+package com.lynas.service.impl;
 
-import com.brahalla.Cerberus.domain.User;
-import com.brahalla.Cerberus.model.security.CerberusUser;
-import com.brahalla.Cerberus.repository.UserRepository;
+import com.lynas.domain.User;
+import com.lynas.model.security.SpringSecurityUser;
+import com.lynas.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
         } else {
-            return new CerberusUser(
+            return new SpringSecurityUser(
                     user.getId(),
                     user.getUsername(),
                     user.getPassword(),

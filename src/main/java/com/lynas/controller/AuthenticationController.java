@@ -1,9 +1,9 @@
-package com.brahalla.Cerberus.controller;
+package com.lynas.controller;
 
-import com.brahalla.Cerberus.model.json.request.AuthenticationRequest;
-import com.brahalla.Cerberus.model.json.response.AuthenticationResponse;
-import com.brahalla.Cerberus.model.security.CerberusUser;
-import com.brahalla.Cerberus.security.TokenUtils;
+import com.lynas.model.json.request.AuthenticationRequest;
+import com.lynas.model.json.response.AuthenticationResponse;
+import com.lynas.model.security.SpringSecurityUser;
+import com.lynas.security.TokenUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -66,7 +66,7 @@ public class AuthenticationController {
     public ResponseEntity<?> authenticationRequest(HttpServletRequest request) {
         String token = request.getHeader(this.tokenHeader);
         String username = this.tokenUtils.getUsernameFromToken(token);
-        CerberusUser user = (CerberusUser) this.userDetailsService.loadUserByUsername(username);
+        SpringSecurityUser user = (SpringSecurityUser) this.userDetailsService.loadUserByUsername(username);
         if (this.tokenUtils.canTokenBeRefreshed(token, user.getLastPasswordReset())) {
             String refreshedToken = this.tokenUtils.refreshToken(token);
             return ResponseEntity.ok(new AuthenticationResponse(refreshedToken));

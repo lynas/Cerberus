@@ -1,6 +1,6 @@
-package com.brahalla.Cerberus.configuration;
+package com.lynas.configuration;
 
-import com.brahalla.Cerberus.security.AuthenticationTokenFilter;
+import com.lynas.security.AuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;

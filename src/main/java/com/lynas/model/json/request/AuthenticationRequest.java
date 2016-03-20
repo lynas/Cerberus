@@ -1,4 +1,4 @@
-package com.brahalla.Cerberus.model.json.request;
+package com.lynas.model.json.request;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 

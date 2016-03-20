@@ -1,6 +1,6 @@
-package com.brahalla.Cerberus.security;
+package com.lynas.security;
 
-import com.brahalla.Cerberus.model.security.CerberusUser;
+import com.lynas.model.security.SpringSecurityUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -156,7 +156,7 @@ public class TokenUtils {
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
-        CerberusUser user = (CerberusUser) userDetails;
+        SpringSecurityUser user = (SpringSecurityUser) userDetails;
         final String username = this.getUsernameFromToken(token);
         final Date created = this.getCreatedDateFromToken(token);
         final Date expiration = this.getExpirationDateFromToken(token);

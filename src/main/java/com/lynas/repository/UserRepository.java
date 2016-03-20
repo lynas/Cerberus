@@ -1,6 +1,6 @@
-package com.brahalla.Cerberus.repository;
+package com.lynas.repository;
 
-import com.brahalla.Cerberus.domain.User;
+import com.lynas.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {

@@ -1,4 +1,4 @@
-package com.brahalla.Cerberus.domain;
+package com.lynas.domain;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 

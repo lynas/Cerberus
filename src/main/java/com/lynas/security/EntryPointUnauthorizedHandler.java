@@ -1,4 +1,4 @@
-package com.brahalla.Cerberus.security;
+package com.lynas.security;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
