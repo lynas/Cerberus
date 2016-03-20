@@ -1,10 +1,10 @@
 package com.lynas.repository;
 
-import com.lynas.domain.User;
+import com.lynas.model.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<AppUser, Long> {
 
-  public User findByUsername(String username);
+  public AppUser findByUsername(String username);
 
 }

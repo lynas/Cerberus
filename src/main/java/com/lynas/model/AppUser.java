@@ -1,4 +1,4 @@
-package com.lynas.domain;
+package com.lynas.model;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class AppUser {
 
     @Id
     @Column(name = "id")
@@ -25,7 +25,7 @@ public class User {
     @Column(name = "authorities")
     private String authorities;
 
-    public User() {
+    public AppUser() {
         super();
     }
 
@@ -34,7 +34,7 @@ public class User {
         return ReflectionToStringBuilder.toString(this);
     }
 
-    public User(String username, String password, String email, Date lastPasswordReset, String authorities) {
+    public AppUser(String username, String password, String email, Date lastPasswordReset, String authorities) {
         this.setUsername(username);
         this.setPassword(password);
         this.setEmail(email);
