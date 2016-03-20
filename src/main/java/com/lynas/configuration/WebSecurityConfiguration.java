@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,51 +18,63 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.sql.DataSource;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-  @Autowired
-  private ApplicationContext applicationContext;
+    @Autowired
+    private ApplicationContext applicationContext;
 
 
-
-  @Autowired
-  public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-    authenticationManagerBuilder
-      .userDetailsService((UserDetailsService) applicationContext.getBean("userDetailsService"))
-        .passwordEncoder(new BCryptPasswordEncoder());
-  }
-
-
-  @Bean
-  public AuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
-    AuthenticationTokenFilter authenticationTokenFilter = new AuthenticationTokenFilter();
-    authenticationTokenFilter.setAuthenticationManager(super.authenticationManagerBean());
-    return authenticationTokenFilter;
-  }
+    @Autowired
+    public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder
+                .userDetailsService((UserDetailsService) applicationContext.getBean("userDetailsService"))
+                .passwordEncoder(new BCryptPasswordEncoder());
+    }
 
 
-  @Override
-  protected void configure(HttpSecurity httpSecurity) throws Exception {
-    httpSecurity
-      .csrf()
-        .disable()
-      .exceptionHandling()
-        .authenticationEntryPoint((AuthenticationEntryPoint) applicationContext.getBean("authenticationEntryPoint"))
-        .and()
-      .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-      .authorizeRequests()
-        .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-        .antMatchers("/auth/**").permitAll()
-        .anyRequest().authenticated();
+    @Bean
+    public AuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
+        AuthenticationTokenFilter authenticationTokenFilter = new AuthenticationTokenFilter();
+        authenticationTokenFilter.setAuthenticationManager(super.authenticationManagerBean());
+        return authenticationTokenFilter;
+    }
 
-    // Custom JWT based authentication
-    httpSecurity
-      .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
-  }
+
+    @Override
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .csrf()
+                .disable()
+                .exceptionHandling()
+                .authenticationEntryPoint((AuthenticationEntryPoint) applicationContext.getBean("authenticationEntryPoint"))
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers("/auth/**").permitAll()
+                .anyRequest().authenticated();
+
+        // Custom JWT based authentication
+        httpSecurity
+                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Bean(name = "dataSource")
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/test");
+        dataSource.setUsername("root");
+        dataSource.setPassword("");
+
+        return dataSource;
+    }
 
 }

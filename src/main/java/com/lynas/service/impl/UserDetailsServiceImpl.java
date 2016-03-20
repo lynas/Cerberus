@@ -2,7 +2,7 @@ package com.lynas.service.impl;
 
 import com.lynas.model.AppUser;
 import com.lynas.model.security.SpringSecurityUser;
-import com.lynas.repository.UserRepository;
+import com.lynas.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,11 +14,11 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private AppUserService appUserService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        AppUser appUser = this.userRepository.findByUsername(username);
+        AppUser appUser = this.appUserService.loadUserByUsername(username);
 
         if (appUser == null) {
             throw new UsernameNotFoundException(String.format("No appUser found with username '%s'.", username));
