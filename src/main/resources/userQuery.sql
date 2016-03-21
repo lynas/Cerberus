@@ -1,0 +1,1 @@
+INSERT INTO test.appuser (password, username, last_password_reset, authorities, email) VALUES ('$2a$10$JtCKXt1ZmZR.v7GlXKHjtOnIiXSOC8rDDCoG4pLNXDCpHVXoXmo3O', 'admin', null, 'ADMIN, ROOT', null);
